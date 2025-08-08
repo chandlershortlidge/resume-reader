@@ -900,6 +900,11 @@ dependencies = [
     { name = "spacy" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "ipykernel" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "en-core-web-sm", url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl" },
@@ -907,6 +912,9 @@ requires-dist = [
     { name = "pymupdf", specifier = ">=1.26.3" },
     { name = "spacy", specifier = ">=3.8.7" },
 ]
+
+[package.metadata.requires-dev]
+dev = [{ name = "ipykernel", specifier = ">=6.30.1" }]
 
 [[package]]
 name = "rich"

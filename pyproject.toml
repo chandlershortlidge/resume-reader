@@ -8,6 +8,7 @@ dependencies = [
     "en-core-web-sm",
     "pymupdf>=1.26.3",
     "spacy>=3.8.7",
+    "ipykernel"
 ]
 
 [tool.uv.sources]

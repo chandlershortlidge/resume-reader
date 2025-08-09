@@ -13,7 +13,7 @@ def report_metadata(doc: fitz.Document) -> None:
         print(f"{key}: {value}")
         
         
-def highlight_keywords(doc: fitz.Documnt, kw_list: list[str]) -> fitz.Document:
+def highlight_keywords(doc: fitz.Document, kw_list: list[str]) -> fitz.Document:
     # multiple kw
     ...
     

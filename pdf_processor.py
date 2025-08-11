@@ -14,12 +14,26 @@ def report_metadata(doc: fitz.Document) -> None:
         
         
 def highlight_keywords(doc: fitz.Document, kw_list: list[str]) -> fitz.Document:
-    # multiple kw
-    ...
+    # Loop through each page in the document
+    for page in doc:
+          # Loop through each keyword in the provided list (kw_list)
+        for keyword in kw_list:
+            # Search for the current keyword on the page
+            matches = page.search_for(keyword)
+            if matches:
+                print(f"Found '{keyword}' on page {page.number + 1}")
+                # For each match, add a highlight
+                for r in matches:
+                    highlight = page.add_highlight_annot(r)
+                    highlight.update()
+    return doc
     
     
-def save_highlighted_doc(doc: fitz.Document) -> None:
-    ...
+def save_highlighted_doc(doc: fitz.Document, out_path: str = "highlighted_output.pdf") -> None:
+    """Saves the document to the specified path."""
+    doc.save(out_path, garbage=4, deflate=True, clean=True)
+    print(f"Saved highlighted PDF as: {out_path}")
+    
     
     
 def get_links(doc: fitz.Document) -> list[str]:

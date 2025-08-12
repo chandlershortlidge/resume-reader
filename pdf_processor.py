@@ -49,12 +49,9 @@ def get_emails(doc: fitz.Document) -> list[str]:
     
     
 def pdf_to_markdown(doc: fitz.Document) -> str:
-    
     md_lines = []
 
-    for p in range(doc.page_count):
-        page = doc.load_page(p)
-        # get a nested dict of blocks → lines → spans
+    for page in doc:
         page_dict = page.get_text("dict")
 
         for block in page_dict["blocks"]:
@@ -83,7 +80,8 @@ def pdf_to_markdown(doc: fitz.Document) -> str:
             md_lines.append(text)
 
         # Add a page break marker (optional)
-        md_lines.append("\n---\n")
+        md_lines.append("---")
     
-    return "\\n\\n".join(md_lines)    
+    # Corrected return statement with single backslashes
+    return "\n\n".join(md_lines)   
 

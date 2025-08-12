@@ -1,4 +1,5 @@
 import fitz
+import re
 
 
 def load_file(path: str) -> fitz.Document:
@@ -47,19 +48,42 @@ def get_emails(doc: fitz.Document) -> list[str]:
     ...
     
     
-def convert_to_markdown(doc: fitz.Document) -> str:
-    """
-    Converts a PDF document object to a markdown formatted string.
-    """
+def pdf_to_markdown(doc: fitz.Document) -> str:
+    
     md_lines = []
-    for page in doc:
-        # The get_text("markdown") method is a powerful shortcut!
-        md_text = page.get_text("markdown")
-        md_lines.append(md_text)
 
-    # Join the markdown text from all pages and add a page separator
-    return "\n\n---\n\n".join(md_lines)
-    # TODO
-    # try your function
-    # try als https://pymupdf.readthedocs.io/en/latest/rag.html
-    ...
+    for p in range(doc.page_count):
+        page = doc.load_page(p)
+        # get a nested dict of blocks → lines → spans
+        page_dict = page.get_text("dict")
+
+        for block in page_dict["blocks"]:
+            # Only text blocks (ignore images, drawings)
+            if block["type"] != 0:
+                continue
+
+            # Join all spans in this block into one text string
+            text = " ".join(span["text"] for line in block["lines"] for span in line["spans"])
+            text = text.strip()
+            if not text:
+                continue
+
+            #  Simple heuristic: ALL CAPS + short → H2
+            if text.isupper() and len(text) < 60:
+                md_lines.append(f"## {text.title()}")
+                continue
+
+            # Detect bullet lists (e.g. lines starting with • or –)
+            if re.match(r"^[•\-\u2022]\s+", text):
+                item = re.sub(r"^[•\-\u2022]\s+", "", text)
+                md_lines.append(f"-{item}")
+                continue
+
+            # Otherwise treat as paragraph
+            md_lines.append(text)
+
+        # Add a page break marker (optional)
+        md_lines.append("\n---\n")
+    
+    return "\\n\\n".join(md_lines)    
+

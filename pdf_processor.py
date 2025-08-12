@@ -48,6 +48,17 @@ def get_emails(doc: fitz.Document) -> list[str]:
     
     
 def convert_to_markdown(doc: fitz.Document) -> str:
+    """
+    Converts a PDF document object to a markdown formatted string.
+    """
+    md_lines = []
+    for page in doc:
+        # The get_text("markdown") method is a powerful shortcut!
+        md_text = page.get_text("markdown")
+        md_lines.append(md_text)
+
+    # Join the markdown text from all pages and add a page separator
+    return "\n\n---\n\n".join(md_lines)
     # TODO
     # try your function
     # try als https://pymupdf.readthedocs.io/en/latest/rag.html

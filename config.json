@@ -1,0 +1,10 @@
+{
+  "required_keywords": [
+    "LLMs", "prompt engineering", "embeddings", "RAG workflows",
+    "Python", "LangChain", "spaCy", "knowledge extraction", "Data Scientist"
+  ],
+  "optional_keywords": [
+    "TensorFlow", "Keras", "PyTorch", "vector database",
+    "SQL", "Pandas", "FAISS", "document AI"
+  ]
+}

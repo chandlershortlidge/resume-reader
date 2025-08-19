@@ -42,6 +42,18 @@ def get_score_color(percentage: float) -> str:
         return "red"
 
 
+def get_score_description(percentage: float) -> str:
+    """Returns a descriptive string based on the score percentage."""
+    if percentage >= 75:
+        return "— Great match"
+    elif percentage >= 50:
+        return "— Good match"
+    elif percentage >= 25:
+        return "— Okay match"
+    else:
+        return "— Poor match"
+
+
 required_keywords, optional_keywords = get_keywords()
 
 uploaded_file = st.file_uploader("Upload a resume (PDF)", type="pdf")
@@ -81,11 +93,15 @@ if uploaded_file is not None:
     # Calculate percentage and determine color
     percentage_score = (score / max_score) * 100 if max_score > 0 else 0
     color = get_score_color(percentage_score)
+    description = get_score_description(percentage_score)
 
     # Display the colored score using custom HTML
     st.markdown(f"""
-    <p style="font-size: 0.875rem; color: #808495; margin-bottom: -5px;">Match Percentage</p>
-    <p style="font-size: 2.25rem; font-weight: 600; color: {color};">{percentage_score:.1f}%</p>
+    <p style="font-size: 0.875rem; color: #808495; margin-bottom: -5px;">Match Score</p>
+    <div style="display: flex; align-items: baseline; gap: 10px;">
+        <p style="font-size: 2.25rem; font-weight: 600; color: {color}; margin: 0;">{percentage_score:.1f}%</p>
+        <p style="font-size: 1.25rem; font-weight: 500; color: {color}; margin: 0;">{description}</p>
+    </div>
     """, unsafe_allow_html=True)
 
     with st.expander("See keyword analysis"):

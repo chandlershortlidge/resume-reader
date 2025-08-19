@@ -94,4 +94,7 @@ def calculate_score(clean_text: str, required_keywords: list[str], optional_keyw
     all_keywords_map = {kw.lower(): kw for kw in all_keywords}
     found_terms_original_case = {all_keywords_map[term] for term in found_terms_lower}
 
-    return score, found_terms_original_case
+    # Calculate the maximum possible score
+    max_score = len(required_keywords) + (0.5 * len(optional_keywords))
+
+    return score, found_terms_original_case, max_score

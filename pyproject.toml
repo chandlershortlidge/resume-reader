@@ -8,6 +8,8 @@ dependencies = [
     "en-core-web-sm",
     "pymupdf>=1.26.3",
     "spacy>=3.8.7",
+    "streamlit>=1.48.1",
+    "watchdog>=6.0.0-py3-none-any.whl",
 ]
 
 [tool.uv.sources]

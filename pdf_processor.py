@@ -35,13 +35,43 @@ def save_highlighted_doc(doc: fitz.Document, out_path: str = "highlighted_output
     doc.save(out_path, garbage=4, deflate=True, clean=True)
     print(f"Saved highlighted PDF as: {out_path}")
     
+
+def save_markdown_file(markdown_text: str, file_path: str):
+    """Saves a string of markdown text to a file."""
+    with open(file_path, "w", encoding="utf-8") as f:
+        f.write(markdown_text)
+    print(f"Markdown content successfully saved to {file_path}")
     
+        
     
 def get_links(doc: fitz.Document) -> list[str]:
     """
     extracts links with http or https and returns the list of links
     """
-    ...
+    for page_num in range(doc.page_count):
+        page = doc.load_page(page_num) 
+        links = page.links() # list of link-dicts from page
+
+        if not links:
+            continue
+
+        print(f"Page {page_num + 1} links:")
+        for link in links: 
+        # Common keys: 'kind', 'from', and either 'uri' or 'xref'/'to'
+            kind = link["kind"]
+            location = link["from"] # where the link is located
+            uri = link.get("uri") # external URL, if any
+            to = link.get("to") # (page, ...) for internal jumps
+
+            if uri:
+                print(f"  -> URI: {uri}")
+            elif to:
+                print(f"  → Internal link to page {to[0] + 1}")
+            else:
+                print("  → Other link kind:", kind)
+
+            print(f"    location on page: {location}")   
+ 
     
     
 def get_emails(doc: fitz.Document) -> list[str]:

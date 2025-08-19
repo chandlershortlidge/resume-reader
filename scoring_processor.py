@@ -26,3 +26,23 @@ def load_keywords_from_config(config_path="config.json"):
     
     return required, optional
 
+
+
+def calculate_score(clean_text: str, required_keywords: list[str], optional_keywords: list[str]):
+    """Calculates a score based on keywords found in the text."""
+    score = 0
+    found_terms = set()
+
+    # Score required keywords
+    for term in required_keywords:
+        if term in clean_text:
+            score += 1
+            found_terms.add(term)
+
+    # Score optional keywords
+    for term in optional_keywords:
+        if term in clean_text:
+            score += 0.5
+            found_terms.add(term)
+            
+    return score, found_terms

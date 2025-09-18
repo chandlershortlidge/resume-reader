@@ -9,6 +9,8 @@ This project is a Streamlit application designed to score resumes against a pred
 - **Match Analysis**: The application reports a percentage match score and lists all found and missing keywords.
 - **Downloadable Output**: The highlighted resume can be downloaded directly from the application.
 
+  ![Resume Reader Demo](docs/demo.gif)
+
 ## Setup and Installation
 
 ### Prerequisites
@@ -67,3 +69,4 @@ The Streamlit interface will prompt you to upload a PDF file. Once uploaded, the
 - `pyproject.toml`: Project configuration and dependency manifest.
 - `.python-version`: Specifies the Python version to be used.
 - `.gitignore`: Specifies files and directories to be ignored by Git.
+
